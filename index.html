@@ -247,6 +247,21 @@
             perspective: 1200px;
         }
 
+        /* Image Smooth Preload & Skeleton Styling */
+        .photo-card-3d img,
+        .flip-card-front img,
+        .polaroid-item img,
+        .waterfall-item img,
+        .lightbox-img {
+            background: rgba(255, 182, 193, 0.08) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="%23ff85a2" opacity="0.35"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>') center center no-repeat;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        img.img-loaded {
+            opacity: 1 !important;
+        }
+
         .view-panel {
             display: none;
             width: 100%;
@@ -281,6 +296,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            touch-action: pan-y;
+            overflow: hidden;
         }
 
         .carousel-3d {
@@ -785,44 +802,6 @@
             }
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .title-main {
-                font-size: 2.4rem;
-            }
-
-            .title-sub {
-                font-size: 1.6rem;
-            }
-
-            .carousel-3d {
-                width: 200px;
-                height: 270px;
-            }
-
-            .polaroid-item {
-                width: 220px;
-                padding-bottom: 45px;
-            }
-
-            .polaroid-item img {
-                height: 210px;
-            }
-
-            .love-timer-card {
-                padding: 10px 18px;
-                gap: 12px;
-            }
-
-            .time-value {
-                font-size: 1.3rem;
-            }
-
-            .view-switcher {
-                flex-wrap: wrap;
-            }
-        }
-
         /* Waterfall Stream Style */
         .waterfall-container {
             width: 100%;
@@ -895,15 +874,283 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        /* Responsive Design & Mobile Optimizations */
         @media (max-width: 768px) {
+            header {
+                padding: 12px 18px;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
+            main {
+                padding-top: 10px;
+                padding-bottom: 40px;
+            }
+
+            .hero-section {
+                padding: 20px 10px 10px;
+            }
+
+            .title-main {
+                font-size: 2.2rem;
+                letter-spacing: 2px;
+            }
+
+            .title-sub {
+                font-size: 1.5rem;
+            }
+
+            .love-timer-card {
+                padding: 8px 16px;
+                gap: 12px;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            .time-value {
+                font-size: 1.3rem;
+            }
+
+            .time-label {
+                font-size: 0.7rem;
+            }
+
+            .view-switcher {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 0 15px;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+
+            .tab-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 9px 10px;
+                font-size: 0.85rem;
+                white-space: nowrap;
+            }
+
+            .stage-container {
+                min-height: 400px;
+            }
+
+            .carousel-stage {
+                height: 380px;
+            }
+
+            .carousel-3d {
+                width: 180px;
+                height: 250px;
+            }
+
+            .photo-card-3d {
+                padding: 8px 8px 38px 8px;
+                border-radius: 8px;
+            }
+
+            .photo-card-3d .caption {
+                bottom: 8px;
+                font-size: 0.95rem;
+            }
+
+            .carousel-hint {
+                font-size: 0.78rem;
+                bottom: -10px;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 5px;
+            }
+
+            .flip-card {
+                height: 250px;
+            }
+
+            .flip-card-front .card-title {
+                font-size: 1.05rem;
+            }
+
+            .flip-card-back {
+                padding: 15px 10px;
+            }
+
+            .flip-card-back p {
+                font-size: 0.9rem;
+                line-height: 1.4;
+            }
+
+            .polaroid-stack {
+                height: 360px;
+            }
+
+            .polaroid-item {
+                width: 170px;
+                padding: 10px 10px 40px 10px;
+            }
+
+            .polaroid-item img {
+                height: 160px;
+            }
+
+            .polaroid-item .note {
+                font-size: 0.95rem;
+                bottom: 8px;
+            }
+
             .waterfall-container {
                 column-count: 2;
+                column-gap: 12px;
+                padding: 5px 10px;
+            }
+
+            .waterfall-item {
+                margin-bottom: 12px;
+            }
+
+            .waterfall-info {
+                padding: 10px;
+            }
+
+            .waterfall-info h4 {
+                font-size: 1.05rem;
+            }
+
+            .waterfall-info p {
+                font-size: 0.8rem;
+            }
+
+            .envelope-wrapper {
+                width: 280px;
+                height: 190px;
+            }
+
+            .envelope-flap {
+                border-left-width: 140px;
+                border-right-width: 140px;
+                border-top-width: 105px;
+            }
+
+            .wax-seal {
+                top: 85px;
+                width: 44px;
+                height: 44px;
+                font-size: 1.2rem;
+            }
+
+            .letter-content {
+                padding: 15px;
+            }
+
+            .envelope-wrapper.open .letter-content {
+                transform: translateY(-110px);
+                height: 280px;
+            }
+
+            .letter-text {
+                font-size: 1rem;
+                line-height: 1.6;
+            }
+
+            .bottom-actions {
+                bottom: 20px;
+                right: 15px;
+                gap: 10px;
+            }
+
+            .action-btn {
+                width: 44px;
+                height: 44px;
+                font-size: 1.1rem;
+            }
+
+            .lightbox-close {
+                top: -40px;
+                right: 5px;
+                font-size: 2.2rem;
+            }
+
+            .lightbox-caption {
+                font-size: 1.2rem;
+                margin-top: 10px;
+            }
+
+            .modal-body {
+                padding: 20px;
+                border-radius: 16px;
             }
         }
 
         @media (max-width: 480px) {
+            .title-main {
+                font-size: 1.8rem;
+            }
+
+            .title-sub {
+                font-size: 1.2rem;
+            }
+
+            .carousel-stage {
+                height: 330px;
+            }
+
+            .carousel-3d {
+                width: 140px;
+                height: 200px;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .flip-card {
+                height: 220px;
+            }
+
+            .flip-card-front {
+                padding: 8px;
+            }
+
             .waterfall-container {
-                column-count: 1;
+                column-count: 2;
+                column-gap: 8px;
+                padding: 5px;
+            }
+
+            .waterfall-item {
+                margin-bottom: 8px;
+                border-radius: 10px;
+            }
+
+            .waterfall-info {
+                padding: 8px 6px;
+            }
+
+            .waterfall-info h4 {
+                font-size: 0.95rem;
+            }
+
+            .waterfall-info p {
+                font-size: 0.72rem;
+            }
+
+            .polaroid-item {
+                width: 130px;
+                padding: 6px 6px 30px 6px;
+            }
+
+            .polaroid-item img {
+                height: 120px;
+            }
+
+            .polaroid-stack {
+                height: 300px;
             }
         }
     </style>
@@ -1166,6 +1413,25 @@
             }
         ];
 
+        // Photo Preloading & Caching Helper
+        function handleImgLoad(img) {
+            if (!img) return;
+            if (img.complete) {
+                img.classList.add('img-loaded');
+            } else {
+                img.onload = () => img.classList.add('img-loaded');
+                img.onerror = () => img.classList.add('img-loaded');
+            }
+        }
+
+        function preloadAllImages() {
+            photoData.forEach((item) => {
+                const img = new Image();
+                img.src = item.url;
+            });
+        }
+        preloadAllImages();
+
         // 1. Interactive Love Timer
         let startDate = new Date("2026-08-01T00:00:00");
 
@@ -1186,22 +1452,30 @@
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // 2. Render 3D Carousel (Dynamic radius for 13 items)
+        // 2. Render 3D Carousel (Dynamic radius for responsive mobile layout)
         const carousel3d = document.getElementById("carousel3d");
         const totalCards = photoData.length;
-        const radius = Math.max(380, Math.round(totalCards * 32));
+
+        function getCarouselRadius() {
+            const w = window.innerWidth;
+            if (w <= 480) return Math.min(210, Math.round(totalCards * 16));
+            if (w <= 768) return Math.min(280, Math.round(totalCards * 21));
+            return Math.max(380, Math.round(totalCards * 32));
+        }
 
         function init3DCarousel() {
             carousel3d.innerHTML = "";
+            const radius = getCarouselRadius();
             photoData.forEach((item, index) => {
                 const angle = (index / totalCards) * 360;
                 const card = document.createElement("div");
                 card.className = "photo-card-3d";
                 card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
                 card.innerHTML = `
-                    <img src="${item.url}" alt="${item.title}" loading="lazy">
+                    <img src="${item.url}" alt="${item.title}" decoding="async">
                     <div class="caption">${item.title}</div>
                 `;
+                handleImgLoad(card.querySelector("img"));
                 card.addEventListener("click", () => openLightbox(item.url, item.title + " - " + item.desc));
                 carousel3d.appendChild(card);
             });
@@ -1265,12 +1539,13 @@
                 const el = document.createElement("div");
                 el.className = "waterfall-item";
                 el.innerHTML = `
-                    <img src="${item.url}" alt="${item.title}" loading="lazy">
+                    <img src="${item.url}" alt="${item.title}" decoding="async" loading="lazy">
                     <div class="waterfall-info">
                         <h4>${item.title}</h4>
                         <p>${item.desc}</p>
                     </div>
                 `;
+                handleImgLoad(el.querySelector("img"));
                 el.addEventListener("click", () => openLightbox(item.url, item.title + " - " + item.desc));
                 waterfallGrid.appendChild(el);
             });
@@ -1286,7 +1561,7 @@
                 card.innerHTML = `
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
-                            <img src="${item.url}" alt="${item.title}" loading="lazy">
+                            <img src="${item.url}" alt="${item.title}" decoding="async" loading="lazy">
                             <div class="card-title">${item.title}</div>
                         </div>
                         <div class="flip-card-back">
@@ -1296,29 +1571,34 @@
                         </div>
                     </div>
                 `;
+                handleImgLoad(card.querySelector("img"));
                 card.addEventListener("dblclick", () => openLightbox(item.url, item.title + " - " + item.desc));
                 cardsGrid.appendChild(card);
             });
         }
 
-        // 5. Render Polaroid Stack
+        // 5. Render Polaroid Stack (Mobile responsive spacing)
         const polaroidStack = document.getElementById("polaroidStack");
         function initPolaroidStack() {
             polaroidStack.innerHTML = "";
             const rotations = [-10, 8, -6, 12, -4, 9, -7, 5, -8, 11, -5, 7, -9];
+            const w = window.innerWidth;
+            const offsetStep = w <= 480 ? 10 : (w <= 768 ? 16 : 25);
+
             photoData.forEach((item, index) => {
                 const el = document.createElement("div");
                 el.className = "polaroid-item";
                 const rot = rotations[index % rotations.length];
-                const offsetX = (index - Math.floor(photoData.length / 2)) * 25;
+                const offsetX = (index - Math.floor(photoData.length / 2)) * offsetStep;
                 el.style.transform = `translateX(${offsetX}px) rotate(${rot}deg)`;
                 el.style.zIndex = index + 1;
 
                 el.innerHTML = `
                     <div class="polaroid-tape"></div>
-                    <img src="${item.url}" alt="${item.title}" loading="lazy">
+                    <img src="${item.url}" alt="${item.title}" decoding="async" loading="lazy">
                     <div class="note">${item.title}</div>
                 `;
+                handleImgLoad(el.querySelector("img"));
 
                 el.addEventListener("click", () => {
                     const allItems = polaroidStack.querySelectorAll(".polaroid-item");
@@ -1333,6 +1613,16 @@
                 polaroidStack.appendChild(el);
             });
         }
+
+        // Window resize debounced re-render
+        let resizeTimer = null;
+        window.addEventListener("resize", () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                init3DCarousel();
+                initPolaroidStack();
+            }, 200);
+        });
 
         // Tab Switcher
         const tabBtns = document.querySelectorAll(".tab-btn");
@@ -1356,7 +1646,9 @@
         const lightboxClose = document.getElementById("lightboxClose");
 
         function openLightbox(url, caption) {
+            lightboxImg.classList.remove("img-loaded");
             lightboxImg.src = url;
+            handleImgLoad(lightboxImg);
             lightboxCaption.innerText = caption;
             lightboxModal.classList.add("active");
             triggerHeartBurst(window.innerWidth / 2, window.innerHeight / 2);
