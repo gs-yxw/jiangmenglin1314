@@ -874,6 +874,196 @@
             transform: translateX(-50%) translateY(0);
         }
 
+        body.intro-active {
+            overflow: hidden;
+        }
+
+        body.intro-active main,
+        body.intro-active .bottom-actions {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .dedication {
+            position: fixed;
+            right: 24px;
+            bottom: 20px;
+            z-index: 110;
+            color: rgba(255, 230, 153, 0.92);
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 12px rgba(255, 117, 140, 0.8);
+        }
+
+        .intro-dedication {
+            z-index: 3;
+            right: 28px;
+            bottom: 24px;
+        }
+
+        body.intro-active .main-dedication {
+            opacity: 0;
+        }
+
+        main,
+        #particleCanvas,
+        .bottom-actions {
+            transition: opacity 0.9s ease;
+        }
+
+        .intro-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: transparent;
+            opacity: 1;
+            transition: opacity 1s ease;
+        }
+
+        .intro-screen.is-leaving {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-background {
+            display: none;
+        }
+
+        .intro-content {
+            position: relative;
+            z-index: 2;
+            width: min(92vw, 900px);
+            height: min(88vh, 760px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .intro-welcome {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: clamp(2rem, 5vw, 4.4rem);
+            line-height: 1.35;
+            color: #fff;
+            text-shadow: 0 0 24px rgba(255, 117, 140, 0.9);
+            animation: introTextIn 1.2s ease both;
+        }
+
+        .intro-welcome span {
+            display: block;
+            margin-top: 16px;
+            font-family: 'Noto Serif SC', serif;
+            font-size: clamp(0.95rem, 2vw, 1.3rem);
+            color: rgba(255, 230, 153, 0.9);
+            letter-spacing: 3px;
+        }
+
+        .intro-countdown {
+            position: absolute;
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(5rem, 16vw, 11rem);
+            color: #fff;
+            text-shadow: 0 0 35px var(--primary-color), 0 0 80px var(--primary-glow);
+            animation: countdownPop 0.8s ease both;
+        }
+
+        .intro-heart {
+            position: absolute;
+            inset: 0;
+        }
+
+        .intro-photo {
+            position: absolute;
+            width: clamp(54px, 9vw, 96px);
+            aspect-ratio: 1;
+            border-radius: 8px;
+            box-shadow: 0 0 18px rgba(255, 75, 114, 0.75);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.1) rotate(-18deg);
+            transition: opacity 0.55s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .intro-photo img {
+            width: 100%;
+            height: 100%;
+            padding: 4px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+        }
+
+        .intro-photo-number,
+        .photo-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 1.8em;
+            height: 1.8em;
+            padding: 0 0.35em;
+            border-radius: 999px;
+            background: rgba(35, 8, 35, 0.78);
+            color: #fff;
+            font: 700 0.72rem/1 'Noto Serif SC', serif;
+            letter-spacing: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+        }
+
+        .intro-photo-number {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            z-index: 1;
+        }
+
+        .intro-photo.is-visible {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1) rotate(var(--rotation));
+        }
+
+        .intro-hint {
+            position: absolute;
+            bottom: 5%;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+
+        @keyframes introTextIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes countdownPop {
+            0% {
+                opacity: 0;
+                transform: scale(1.7);
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.9;
+                transform: scale(1);
+            }
+        }
+
         /* Responsive Design & Mobile Optimizations */
         @media (max-width: 768px) {
             header {
@@ -1156,7 +1346,21 @@
     </style>
 </head>
 
-<body>
+<body class="intro-active">
+
+    <div class="intro-screen" id="introScreen" aria-live="polite">
+        <div class="intro-background" id="introBackground"></div>
+        <div class="intro-content">
+            <div class="intro-welcome" id="introWelcome">
+                欢迎来到姜孟琳的时光相册
+                <span>即将开始相册的时光之旅，请大家做好准备</span>
+            </div>
+            <div class="intro-countdown" id="introCountdown"></div>
+            <div class="intro-heart" id="introHeart"></div>
+            <div class="intro-hint">每一张照片，都是一段值得珍藏的时光</div>
+        </div>
+        <div class="dedication intro-dedication">袁修魏赠</div>
+    </div>
 
     <!-- Canvas Particle FX -->
     <canvas id="particleCanvas"></canvas>
@@ -1192,7 +1396,7 @@
         <!-- View Switcher Tabs -->
         <div class="view-switcher">
             <button class="tab-btn active" data-view="3d-carousel">
-                <span>🎠</span> 3D 旋转相册 (12张)
+                <span>🎠</span> 3D 旋转相册 (16张)
             </button>
             <button class="tab-btn" data-view="waterfall">
                 <span>✨</span> 流光瀑布墙
@@ -1279,7 +1483,6 @@
         <button class="action-btn" id="fireworkBtn" title="释放爱心烟花">🎆</button>
         <button class="action-btn" id="heartExplodeBtn" title="爱心漫天雨">💖</button>
     </div>
-
     <!-- Lightbox Modal -->
     <div class="lightbox-modal" id="lightboxModal">
         <div class="lightbox-content">
@@ -1347,6 +1550,21 @@
         // Photo Data using local relative image paths for maximum reliability
         const photoData = [
             {
+                url: "54121977ddf32cd1381254e0792915c1.jpg",
+                title: "珍藏时光 💖",
+                desc: "把每一个值得记住的瞬间，都收藏进这本时光相册。"
+            },
+            {
+                url: "b38001789f191047bcd7b55fda85d1e0.jpg",
+                title: "美好相遇 ✨",
+                desc: "所有相遇都有意义，所有记忆都值得珍藏。"
+            },
+            {
+                url: "db401f5366edda1100d4d2054674fa2d.jpg",
+                title: "温柔记忆 🌸",
+                desc: "时光慢慢向前走，而美好的回忆一直都在。"
+            },
+            {
                 url: "0157d10b58a795f0c0e6f162acddc1f6.jpg",
                 title: "初见倾心 💓",
                 desc: "一眼万年的心动，开启了属于我们的甜蜜故事。"
@@ -1405,8 +1623,75 @@
                 url: "fb65cd461bb905915286787f38d20a85.jpg",
                 title: "执子之手 💍",
                 desc: "握紧你的手，就拥有了通往幸福的所有答案。"
+            },
+            {
+                url: "f6852d3c512f9b3fcff8a09c2a380fd3.jpg",
+                title: "新的珍藏 💖",
+                desc: "把新的美好瞬间，也放进我们的时光相册。"
             }
         ];
+
+        photoData.forEach((item, index) => {
+            item.number = String(index + 1).padStart(2, "0");
+        });
+
+        function startIntro() {
+            const introScreen = document.getElementById("introScreen");
+            const introWelcome = document.getElementById("introWelcome");
+            const introCountdown = document.getElementById("introCountdown");
+            const introHeart = document.getElementById("introHeart");
+            const heartPoints = [
+                [50, 28], [43, 22], [35, 24], [29, 31], [27, 40], [30, 49],
+                [36, 58], [43, 67], [50, 77], [57, 67], [64, 58], [70, 49],
+                [73, 40], [71, 31], [65, 24], [57, 22]
+            ];
+            const rotations = [-8, 7, -5, 8, -7, 5, -4, 6, -6, 5, -8, 7];
+
+            photoData.forEach((item, index) => {
+                const photo = document.createElement("div");
+                const image = document.createElement("img");
+                const number = document.createElement("span");
+                const point = heartPoints[index % heartPoints.length];
+                photo.className = "intro-photo";
+                image.src = item.url;
+                image.alt = item.title;
+                number.className = "intro-photo-number";
+                number.textContent = item.number;
+                photo.style.left = `${point[0]}%`;
+                photo.style.top = `${point[1]}%`;
+                photo.style.setProperty("--rotation", `${rotations[index % rotations.length]}deg`);
+                photo.append(image, number);
+                introHeart.appendChild(photo);
+            });
+
+            setTimeout(() => {
+                introWelcome.style.display = "none";
+                let count = 3;
+                const countdownTimer = setInterval(() => {
+                    introCountdown.textContent = count > 0 ? count : "开始";
+                    introCountdown.style.animation = "none";
+                    void introCountdown.offsetWidth;
+                    introCountdown.style.animation = "countdownPop 0.8s ease both";
+                    if (count === 0) {
+                        clearInterval(countdownTimer);
+                        setTimeout(() => {
+                            const photos = introHeart.querySelectorAll(".intro-photo");
+                            photos.forEach((photo, index) => {
+                                setTimeout(() => photo.classList.add("is-visible"), index * 230);
+                            });
+                            setTimeout(() => {
+                                introScreen.classList.add("is-leaving");
+                                document.body.classList.remove("intro-active");
+                                setTimeout(() => introScreen.remove(), 1000);
+                            }, photos.length * 230 + 2200);
+                        }, 850);
+                    }
+                    count -= 1;
+                }, 850);
+            }, 2600);
+        }
+
+        startIntro();
 
         // Photo Preloading & Caching Helper
         function handleImgLoad(img) {
@@ -1468,7 +1753,7 @@
                 card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
                 card.innerHTML = `
                     <img src="${item.url}" alt="${item.title}" decoding="async">
-                    <div class="caption">${item.title}</div>
+                    <div class="caption"><span class="photo-number">${item.number}</span> ${item.title}</div>
                 `;
                 handleImgLoad(card.querySelector("img"));
                 card.addEventListener("click", () => openLightbox(item.url, item.title + " - " + item.desc));
@@ -1536,7 +1821,7 @@
                 el.innerHTML = `
                     <img src="${item.url}" alt="${item.title}" decoding="async" loading="lazy">
                     <div class="waterfall-info">
-                        <h4>${item.title}</h4>
+                        <h4><span class="photo-number">${item.number}</span> ${item.title}</h4>
                         <p>${item.desc}</p>
                     </div>
                 `;
@@ -1557,7 +1842,7 @@
                     <div class="flip-card-inner">
                         <div class="flip-card-front">
                             <img src="${item.url}" alt="${item.title}" decoding="async" loading="lazy">
-                            <div class="card-title">${item.title}</div>
+                            <div class="card-title"><span class="photo-number">${item.number}</span> ${item.title}</div>
                         </div>
                         <div class="flip-card-back">
                             <div class="heart-icon">💘</div>
@@ -1591,7 +1876,7 @@
                 el.innerHTML = `
                     <div class="polaroid-tape"></div>
                     <img src="${item.url}" alt="${item.title}" decoding="async" loading="lazy">
-                    <div class="note">${item.title}</div>
+                    <div class="note"><span class="photo-number">${item.number}</span> ${item.title}</div>
                 `;
                 handleImgLoad(el.querySelector("img"));
 
